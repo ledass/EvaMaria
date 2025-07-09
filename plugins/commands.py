@@ -466,7 +466,20 @@ async def settings(client, message):
             reply_to_message_id=message.id
         )
 
+@Client.on_message(filters.command(["help"]))
+async def help_m(bot, update):
+    try:
+        help_msg = HELP_MSG
+    except Exception as e:
+        LOGGER.warning(e)
+        help_msg = HELPMSG
 
+    await bot.send_message(
+        chat_id=update.chat.id,
+        text=help_msg,
+        reply_to_message_id=update.reply_to_message_id,
+        reply_markup=HELP_KB,
+    )
 
 @Client.on_message(filters.command('set_template'))
 async def save_template(client, message):
